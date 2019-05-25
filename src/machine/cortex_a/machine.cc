@@ -22,4 +22,16 @@ void Machine::reboot()
     Machine_Model::reboot();
 }
 
+unsigned int Machine::n_cpus()
+{
+    db<Machine>(TRC) << "Machine::n_cpus()" << endl;
+    return Traits<Build>::CPUS;
+}
+
+unsigned int Machine::cpu_id()
+{
+    db<Machine>(TRC) << "Machine::cpu_id()" << endl;
+    return 0; // How return id??
+}
+
 __END_SYS

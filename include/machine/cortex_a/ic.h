@@ -52,7 +52,7 @@ public:
     };
 
     // Interrupts
-    static const unsigned int INTS = 64;
+    static const unsigned int INTS = 93;
     static const unsigned int EXC_INT = 0;
     static const unsigned int HARD_INT = 16;
     static const unsigned int SOFT_INT = HARD_INT + IRQS;
@@ -215,6 +215,7 @@ public:
     void data_abort();
     void reserved();
     void fiq();
+    void irq();
 
 private:
     static void dispatch(unsigned int i);
