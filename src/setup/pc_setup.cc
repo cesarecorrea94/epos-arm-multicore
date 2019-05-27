@@ -171,7 +171,7 @@ PC_Setup::PC_Setup(char * boot_image)
 
     db<Setup>(INF) << "System_Info=" << *si << endl;
 
-    Machine::smp_barrier(si->bm.n_cpus);
+    Machine::smp_barrier(si->bm.n_cpus);//barreira
     if(cpu_id == 0) { // Boot strap CPU (BSP)
 
         // Disable hardware interrupt triggering at PIC
@@ -194,9 +194,9 @@ PC_Setup::PC_Setup(char * boot_image)
         say_hi();
 
         // Configure the memory model defined above
-        setup_idt();
-        setup_gdt();
-        setup_sys_pt();
+        setup_idt();//config interrupcao
+        setup_gdt();//config 
+        setup_sys_pt();//page table
         setup_sys_pd();
 
         // Enable paging
@@ -206,7 +206,8 @@ PC_Setup::PC_Setup(char * boot_image)
         db<Setup>(INF) << "CR0=" << reinterpret_cast<void *>(CPU::cr0()) << endl;
         db<Setup>(INF) << "CR3=" << reinterpret_cast<void *>(CPU::cr3()) << endl;
 
-        enable_paging();
+        enable_paging();//se tem ref. posicao endereço, tem que atualizar ponteiro / frame buffer muda, não esta mais no endereço físico
+        //pic = scu + gic
 
         // Adjust pointers that will still be used to their logical addresses
         bi = reinterpret_cast<char *>(unsigned(bi) | PHY_MEM);
@@ -218,7 +219,7 @@ PC_Setup::PC_Setup(char * boot_image)
         setup_tss();
 
         // Load EPOS parts (e.g. INIT, SYSTEM, APP)
-        load_parts();
+        load_parts();//usaremos só o modo library
 
         // Signalize other CPUs that paging is up
         Paging_Ready = true;
@@ -916,8 +917,8 @@ void PC_Setup::call_next()
     Machine::smp_barrier(si->bm.n_cpus);
 
     // Set SP and call next stage
-    CPU::sp(sp);
-    static_cast<void (*)()>(ip)();
+    CPU::sp(sp);//
+    static_cast<void (*)()>(ip)();//cairá em _init
 
     if(Machine::cpu_id() == 0) { // Boot strap CPU (BSP)
         // This will only happen when INIT was called and Thread was disabled
@@ -1075,10 +1076,10 @@ void _start()
     CPU::int_disable();
 
     // Initialize the APIC (if present)
-    APIC::reset(APIC::LOCAL_APIC_PHY_ADDR);
+    APIC::reset(APIC::LOCAL_APIC_PHY_ADDR);//equivalente ao gic
 
     // The boot strap loaded the boot image at BOOT_IMAGE_ADDR
-    char * bi = reinterpret_cast<char *>(Traits<Machine>::BOOT_IMAGE_ADDR);
+    char * bi = reinterpret_cast<char *>(Traits<Machine>::BOOT_IMAGE_ADDR);//provavelmente nao vai existir no arm
 
     // Get the System_Info (first thing in the boot image)
     System_Info * si = reinterpret_cast<System_Info *>(bi);
@@ -1125,7 +1126,7 @@ void _start()
         si->bm.n_cpus = 1;
 
         // Broadcast INIT IPI to all APs excluding self
-        APIC::ipi_init(si->bm.cpu_status);
+        APIC::ipi_init(si->bm.cpu_status); //energiza os cores (não precisa dess instrução, já ta parado no wfi)
 
         // Broadcast STARTUP IPI to all APs excluding self
         // Non-boot CPUs will run a simplified boot strap just to
@@ -1133,19 +1134,19 @@ void _start()
         // PC_BOOT arranged for this code and stored it at 0x3000
         // ipi_start() waits for cpu_status to be incremented by the finc
         // further down in this code
-        APIC::ipi_start(0x3000, si->bm.cpu_status);
+        APIC::ipi_start(0x3000, si->bm.cpu_status);//liga os cores (vai pro trampolin)
 
         Stacks_Ready = true;
 
     } else { // Additional CPUs (APs)
         // Each AP increments the CPU counter
-        CPU::finc(si->bm.n_cpus);
+        CPU::finc(si->bm.n_cpus);//pré barreira
 
         // Inform BSP that this AP has been initialized
         CPU::finc(si->bm.cpu_status[APIC::id()]);
 
         // Wait for BSP's ACK
-        while(si->bm.cpu_status[APIC::id()] != 2);
+        while(si->bm.cpu_status[APIC::id()] != 2);//espera pela primeira cpu
 
         if(APIC::id() >= int(Traits<Machine>::CPUS)) {
             db<Setup>(WRN) << "More CPUs were detected than the current " << "configuration supports (" << Traits<Machine>::CPUS << ")." << endl;
@@ -1156,7 +1157,8 @@ void _start()
         }
 
         // Wait for the boot strap CPU to get us a stack
-        while(!Stacks_Ready);
+        while(!Stacks_Ready);//espera pela pilha 
+        //Nota: colocar um lock para tratar condição de corrida dos processadores.
     }
 
     // Setup a single page stack for SETUP after its data segment

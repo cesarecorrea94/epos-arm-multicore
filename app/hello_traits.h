@@ -16,6 +16,7 @@ struct Traits
     enum {AVR8, H8, ARMv4, ARMv7, ARMv8, IA32, X86_64, SPARCv8, PPC32};
 
     // Machines
+    //      In Cortex-A9 uniprocessor implementations the base address is set to zero.
     enum {eMote1, eMote2, STK500, RCX, Cortex_A, Cortex_M, Cortex_R, PC, Leon, Virtex};
 
     // Machine models

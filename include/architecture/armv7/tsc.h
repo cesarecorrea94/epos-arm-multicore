@@ -8,20 +8,25 @@
 
 __BEGIN_SYS
 
+/*  The Time Stamp Counter (TSC) is responsible for counting CPU ticks.
+    If a given platform does not feature a hardware TSC,
+    its functionality may be emulated by an ordinary periodic timer.*/
 class TSC: private TSC_Common
 {
     friend class CPU;
     friend class IC;
 
 private:
-    static const unsigned int CLOCK = Traits<CPU>::CLOCK / (Traits<Build>::MODEL == Traits<Build>::Zynq ? 2 : 1);
+    static const unsigned int CLOCK = Traits<CPU>::CLOCK / (Traits<Build>::MODEL == (Traits<Build>::Zynq | Traits<Build>::Realview_PBX) ? 2 : 1);
     static const unsigned int ACCURACY = 40000; // ppb
 
     enum {
         TSC_BASE =
             Traits<Build>::MODEL == Traits<Build>::eMote3  ? 0x40033000 /*TIMER3_BASE*/ :
             Traits<Build>::MODEL == Traits<Build>::LM3S811 ? 0x40031000 /*TIMER1_BASE*/ :
-            Traits<Build>::MODEL == Traits<Build>::Zynq ? 0xF8F00200 /*GLOBAL_TIMER_BASE*/ : 
+            Traits<Build>::MODEL == Traits<Build>::Zynq ? 0xF8F00200 /*GLOBAL_TIMER_BASE*/ :
+            /*GLOBAL_TIMER_BASE: In Cortex-A9 uniprocessor implementations the base address is set to zero.*/
+            Traits<Build>::MODEL == Traits<Build>::Realview_PBX ? 0x00000200 : 
             0
     };
 
@@ -30,7 +35,7 @@ private:
         GPTMTAR = 0x48, // Counter
     };
 
-    // Zynq Global Timer Registers offsets
+    // Zynq and RealView Global Timer Registers offsets
     enum {             // Description
         GTCTRL = 0x00, // Low Counter
         GTCTRH = 0x04, // High Counter

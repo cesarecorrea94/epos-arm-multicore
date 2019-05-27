@@ -1,7 +1,7 @@
-// EPOS LM3S811 (ARM Cortex-M3) MCU Mediator Declarations
+// EPOS LM3S811 (ARM Cortex-A9) MCU Mediator Declarations
 
-#ifndef __lm3s811_h
-#define __lm3s811_h
+#ifndef __realview_pbx_h
+#define __realview_pbx_h
 
 #include <architecture/cpu.h>
 #include <architecture/tsc.h>
@@ -10,7 +10,7 @@
 
 __BEGIN_SYS
 
-class REALVIEW_PBX
+class Realview_PBX
 {
     friend class TSC;
 
@@ -366,7 +366,7 @@ public:
     };
 
 protected:
-    REALVIEW_PBX() {}
+    Realview_PBX() {}
 
     static void reboot() {
         Reg32 val = scs(AIRCR) & (~((-1u / VECTKEY) * VECTKEY));
@@ -502,7 +502,7 @@ protected:
     static void init();
 };
 
-typedef REALVIEW_PBX Machine_Model;
+typedef Realview_PBX Machine_Model;
 
 __END_SYS
 

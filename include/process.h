@@ -100,7 +100,7 @@ protected:
 
     static Thread * volatile running() { return _scheduler.chosen(); }
 
-    static void lock() { CPU::int_disable(); }
+    static void lock() { CPU::int_disable(); }//smp spin lock
     static void unlock() { CPU::int_enable(); }
     static bool locked() { return CPU::int_disabled(); }
 

@@ -1,4 +1,4 @@
-// EPOS REALVIEW_PBX (ARM Cortex) MCU Initialization
+// EPOS Realview_PBX (ARM Cortex) MCU Initialization
 
 #include <machine/main.h>
 
@@ -6,7 +6,7 @@
 
 __BEGIN_SYS
 
-void REALVIEW_PBX::pre_init()
+void Realview_PBX::pre_init()
 {
     // Initialize the clock
     CPU::Reg32 rcc = scr(RCC);
@@ -50,7 +50,7 @@ void REALVIEW_PBX::pre_init()
     scr(RCC) = rcc;
 }
 
-void REALVIEW_PBX::init()
+void Realview_PBX::init()
 {
     db<Init, Machine>(TRC) << "LM3S811::init:CCR = " << scs(CCR) << endl;
     scs(CCR) |= BASETHR; // QEMU bug: on LM3S811 this register is not updated, but it doesn't seem to cause any errors

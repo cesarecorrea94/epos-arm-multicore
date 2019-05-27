@@ -420,7 +420,7 @@ trampoline:
 ; As Linux as86 can't generate 32 bit instructions, we have to code it by hand.
 ; The instruction below is a inter segment jump to GDT[GDT_CODE]:SETUP.
 ; Jump into "SETUP" (actually ix86 Protected Mode starts here)
-;		jmp	0x0008:#SETUP_ENTRY
+;		jmp	0x0008:#SETUP_ENTRY (ainda não acordou os outros cores)
 		.byte	0x66
 		.byte	0xEA
 		.long	SETUP_ENTRY
