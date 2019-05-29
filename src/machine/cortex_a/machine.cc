@@ -31,7 +31,11 @@ unsigned int Machine::n_cpus()
 unsigned int Machine::cpu_id()
 {
     db<Machine>(TRC) << "Machine::cpu_id()" << endl;
-    return 0; // How return id??
+    unsigned int ret = 0;
+    ASM("MRC p15, 0, r1, c0, c0, 5  \n"
+        "AND r1, r1, #0x3           \n"
+        "//MOV =ret, r1               \n"); // Is it right?
+    return ret; // How to return the cpu_id?
 }
 
 __END_SYS

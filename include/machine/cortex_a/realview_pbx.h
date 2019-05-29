@@ -27,15 +27,30 @@ public:
 
     // Base addresses for memory-mapped I/O devices
     enum {
-        WDT0_BASE                   = 0x40000000, // Watchdog Timer
+//        WDT0_BASE                   = 0x40000000, // Watchdog Timer
+        WDT0_BASE                   = 0x1000F000, // SP805 Watchdog module
+        WDT1_BASE                   = 0x10010000, // SP805 Watchdog module
+//  /*
         I2C0_BASE                   = 0x40002000, // I2C
         GPIOA_BASE                  = 0x40004000, // PrimeCell PL061 GPIO
         GPIOB_BASE                  = 0x40005000, // PrimeCell PL061 GPIO
         GPIOC_BASE                  = 0x40006000, // PrimeCell PL061 GPIO
         GPIOD_BASE                  = 0x40007000, // PrimeCell PL061 GPIO
+//  */
+        GPIO0_BASE                  = 0x10013000, // PL061 PrimeCell GPIO
+        GPIO1_BASE                  = 0x10014000, // PL061 PrimeCell GPIO
+        GPIO2_BASE                  = 0x10015000, // PL061 PrimeCell GPIO
+    /*
         USART_BASE                  = 0x40008000, // PrimeCell PL022 Synchronous Serial Port
         UART0_BASE                  = 0x4000c000, // PrimeCell PL011 UART
         UART1_BASE                  = 0x4000d000, // PrimeCell PL011 UART
+    */
+        USART_BASE                  = 0x1000D000, // PL022 PrimeCell SSP (Synchronous Serial Port)
+        UART0_BASE                  = 0x10009000, // PL011 PrimeCell UART
+        UART1_BASE                  = 0x1000A000, // PL011 PrimeCell UART
+        UART2_BASE                  = 0x1000B000, // PL011 PrimeCell UART
+        UART3_BASE                  = 0x1000C000, // PL011 PrimeCell UART
+//  /*
         I2C1_BASE                   = 0x40020000, // I2C
         I2C2_BASE                   = 0x40021000, // I2C
         GPIOE_BASE                  = 0x40024000, // PrimeCell PL061 GPIO
@@ -43,12 +58,19 @@ public:
         TIMER1_BASE                 = 0x40031000, // GPTM
         TIMER2_BASE                 = 0x40032000, // GPTM
         TIMER3_BASE                 = 0,          // Not present
+//  */
+        TIMER01_BASE                = 0x10011000, // SP804 Dual-Timer module
+        TIMER23_BASE                = 0x10012000, // SP804 Dual-Timer module
+        TIMER45_BASE                = 0x10018000, // SP804 Dual-Timer module
+        TIMER67_BASE                = 0x10019000, // SP804 Dual-Timer module
+//  /*
         ADC0_BASE                   = 0x40038000, // ADC
         FLASH0_BASE                 = 0x400fd000, // Flash Controller
         SCR_BASE                    = 0x400fe000, // System Control
         IC0_BASE                    = 0xe000e000, // NVIC
         TIMER4_BASE                 = 0xe000e010, // SysTick
         IC1_BASE                    = 0xe000e0f0, // NVIC
+//  */
     };
 
     // System Control Registers offsets to SCR_BASE

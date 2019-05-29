@@ -18,23 +18,23 @@ template<> struct Traits<Machine>: public Traits<Machine_Common>
     static const unsigned int CPUS = Traits<Build>::CPUS;
 
     // Physical Memory
-    static const unsigned int MEM_BASE    = 0x20000000;
-    static const unsigned int MEM_TOP     = 0x20001fff; // 8 KB (MAX for 32-bit is 0x70000000 / 1792 MB)
-    static const unsigned int BOOT_STACK  = 0x20001ffc; // MEM_TOP - sizeof(int)
+    static const unsigned int MEM_BASE    = 0x10060000; // Is 'Onboard SRAM' here?
+    static const unsigned int MEM_TOP     = 0x10080000-1;
+    static const unsigned int BOOT_STACK  = 0x10080000-4; // MEM_TOP - sizeof(int)
 
     // Logical Memory Map
-    static const unsigned int APP_LOW     = 0x20000000;
-    static const unsigned int APP_CODE    = 0x00000000;
-    static const unsigned int APP_DATA    = 0x20000000;
-    static const unsigned int APP_HIGH    = 0x20001fff; // 8 KB
+    static const unsigned int APP_LOW     = MEM_BASE;
+    static const unsigned int APP_CODE    = 0x00010000; // Mysterious address chosen by Qemu (http://www.informit.com/articles/article.aspx?p=2431417&seqNum=4)
+    static const unsigned int APP_DATA    = APP_LOW;
+    static const unsigned int APP_HIGH    = MEM_TOP;
 
-    static const unsigned int PHY_MEM     = 0x20000000;
-    static const unsigned int IO_BASE     = 0x40000000;
-    static const unsigned int IO_TOP      = 0x440067ff;
+    static const unsigned int PHY_MEM     = MEM_BASE;
+    static const unsigned int IO_BASE     = 0x10000000; // Is 'FPGA Peripherals' here?
+    static const unsigned int IO_TOP      = 0x10020000-1;
 
-    static const unsigned int SYS         = 0x00200000;
-    static const unsigned int SYS_CODE    = 0x00200000; // Library mode only => APP + SYS
-    static const unsigned int SYS_DATA    = 0x20000000; // Library mode only => APP + SYS
+    static const unsigned int SYS         = 0x0; // What goes here??
+    static const unsigned int SYS_CODE    = 0x0; // Library mode only => APP + SYS
+    static const unsigned int SYS_DATA    = MEM_BASE; // Library mode only => APP + SYS
 
     // Default Sizes and Quantities
     static const unsigned int STACK_SIZE  = 512;
