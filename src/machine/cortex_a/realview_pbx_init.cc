@@ -43,7 +43,7 @@ void REALVIEW_PBX::pre_init()
     scr(RCC) = rcc;
 
     // wait for the PLL to lock by polling PLLLRIS
-    while(!(scr(RIS) & RIS_PLLLRIS));
+    while(!(scr(RIS) & RIS_PLLLRIS)); // loop aqui!
 
     // enable use of PLL by clearing BYPASS
     rcc &= ~RCC_BYPASS;
@@ -52,9 +52,9 @@ void REALVIEW_PBX::pre_init()
 
 void REALVIEW_PBX::init()
 {
-    db<Init, Machine>(TRC) << "LM3S811::init:CCR = " << scs(CCR) << endl;
-    scs(CCR) |= BASETHR; // QEMU bug: on LM3S811 this register is not updated, but it doesn't seem to cause any errors
-    db<Init, Machine>(TRC) << "LM3S811::init:CCR = " << scs(CCR) << endl;
+    db<Init, Machine>(TRC) << "REALVIEW_PBX::init:CCR = " << scs(CCR) << endl;
+    scs(CCR) |= BASETHR;
+    db<Init, Machine>(TRC) << "REALVIEW_PBX::init:CCR = " << scs(CCR) << endl;
 }
 
 __END_SYS

@@ -1,4 +1,4 @@
-// EPOS LM3S811 (ARM Cortex-M3) MCU Metainfo and Configuration
+// EPOS RealView (ARM Cortex-A9) MCU Metainfo and Configuration
 
 #ifndef __machine_traits_h
 #define __machine_traits_h
@@ -19,21 +19,21 @@ template<> struct Traits<Machine>: public Traits<Machine_Common>
 
     // Physical Memory
     static const unsigned int MEM_BASE    = 0x10060000; // Is 'Onboard SRAM' here?
-    static const unsigned int MEM_TOP     = 0x10080000-1;
-    static const unsigned int BOOT_STACK  = 0x10080000-4; // MEM_TOP - sizeof(int)
+    static const unsigned int MEM_TOP     = 0x1007FFFF;
+    static const unsigned int BOOT_STACK  = 0x1007FFFC; // MEM_TOP - sizeof(int)
 
     // Logical Memory Map
     static const unsigned int APP_LOW     = MEM_BASE;
-    static const unsigned int APP_CODE    = 0x00010000; // Mysterious address chosen by Qemu (http://www.informit.com/articles/article.aspx?p=2431417&seqNum=4)
-    static const unsigned int APP_DATA    = APP_LOW;
+    static const unsigned int APP_CODE    = 0x00010000; // Address chosen by Qemu (http://www.informit.com/articles/article.aspx?p=2431417&seqNum=4)
+    static const unsigned int APP_DATA    = MEM_BASE;
     static const unsigned int APP_HIGH    = MEM_TOP;
 
     static const unsigned int PHY_MEM     = MEM_BASE;
     static const unsigned int IO_BASE     = 0x10000000; // Is 'FPGA Peripherals' here?
-    static const unsigned int IO_TOP      = 0x10020000-1;
+    static const unsigned int IO_TOP      = 0x1001FFFF;
 
-    static const unsigned int SYS         = 0x0; // What goes here??
-    static const unsigned int SYS_CODE    = 0x0; // Library mode only => APP + SYS
+    static const unsigned int SYS         = 0x00000000; // What goes here??
+    static const unsigned int SYS_CODE    = 0x00000000; // Library mode only => APP + SYS
     static const unsigned int SYS_DATA    = MEM_BASE; // Library mode only => APP + SYS
 
     // Default Sizes and Quantities

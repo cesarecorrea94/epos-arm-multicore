@@ -1,7 +1,7 @@
 // EPOS LM3S811 (ARM Cortex-M3) MCU Mediator Declarations
 
-#ifndef __lm3s811_h
-#define __lm3s811_h
+#ifndef __realview_pbx_h
+#define __realview_pbx_h
 
 #include <architecture/cpu.h>
 #include <architecture/tsc.h>
@@ -27,9 +27,8 @@ public:
 
     // Base addresses for memory-mapped I/O devices
     enum {
-//        WDT0_BASE                   = 0x40000000, // Watchdog Timer
-        WDT0_BASE                   = 0x1000F000, // SP805 Watchdog module
-        WDT1_BASE                   = 0x10010000, // SP805 Watchdog module
+        WDT0_BASE                   = 0x1000F000, // SP805 Watchdog module OK
+        WDT1_BASE                   = 0x10010000, // SP805 Watchdog module OK
 //  /*
         I2C0_BASE                   = 0x40002000, // I2C
         GPIOA_BASE                  = 0x40004000, // PrimeCell PL061 GPIO
@@ -37,19 +36,19 @@ public:
         GPIOC_BASE                  = 0x40006000, // PrimeCell PL061 GPIO
         GPIOD_BASE                  = 0x40007000, // PrimeCell PL061 GPIO
 //  */
-        GPIO0_BASE                  = 0x10013000, // PL061 PrimeCell GPIO
-        GPIO1_BASE                  = 0x10014000, // PL061 PrimeCell GPIO
-        GPIO2_BASE                  = 0x10015000, // PL061 PrimeCell GPIO
+        GPIO0_BASE                  = 0x10013000, // PL061 PrimeCell GPIO OK
+        GPIO1_BASE                  = 0x10014000, // PL061 PrimeCell GPIO OK
+        GPIO2_BASE                  = 0x10015000, // PL061 PrimeCell GPIO OK
     /*
         USART_BASE                  = 0x40008000, // PrimeCell PL022 Synchronous Serial Port
         UART0_BASE                  = 0x4000c000, // PrimeCell PL011 UART
         UART1_BASE                  = 0x4000d000, // PrimeCell PL011 UART
     */
-        USART_BASE                  = 0x1000D000, // PL022 PrimeCell SSP (Synchronous Serial Port)
-        UART0_BASE                  = 0x10009000, // PL011 PrimeCell UART
-        UART1_BASE                  = 0x1000A000, // PL011 PrimeCell UART
-        UART2_BASE                  = 0x1000B000, // PL011 PrimeCell UART
-        UART3_BASE                  = 0x1000C000, // PL011 PrimeCell UART
+        USART_BASE                  = 0x1000D000, // PL022 PrimeCell SSP (Synchronous Serial Port) OK
+        UART0_BASE                  = 0x10009000, // PL011 PrimeCell UART OK
+        UART1_BASE                  = 0x1000A000, // PL011 PrimeCell UART OK
+        UART2_BASE                  = 0x1000B000, // PL011 PrimeCell UART OK
+        UART3_BASE                  = 0x1000C000, // PL011 PrimeCell UART OK
 //  /*
         I2C1_BASE                   = 0x40020000, // I2C
         I2C2_BASE                   = 0x40021000, // I2C
@@ -59,14 +58,15 @@ public:
         TIMER2_BASE                 = 0x40032000, // GPTM
         TIMER3_BASE                 = 0,          // Not present
 //  */
-        TIMER01_BASE                = 0x10011000, // SP804 Dual-Timer module
-        TIMER23_BASE                = 0x10012000, // SP804 Dual-Timer module
-        TIMER45_BASE                = 0x10018000, // SP804 Dual-Timer module
-        TIMER67_BASE                = 0x10019000, // SP804 Dual-Timer module
+        TIMER01_BASE                = 0x10011000, // SP804 Dual-Timer module OK
+        TIMER23_BASE                = 0x10012000, // SP804 Dual-Timer module OK
+        TIMER45_BASE                = 0x10018000, // SP804 Dual-Timer module OK
+        TIMER67_BASE                = 0x10019000, // SP804 Dual-Timer module OK
 //  /*
         ADC0_BASE                   = 0x40038000, // ADC
         FLASH0_BASE                 = 0x400fd000, // Flash Controller
-        SCR_BASE                    = 0x400fe000, // System Control
+        //
+        SCR_BASE                    = 0x10000000, // System Control: pg 104 realview
         IC0_BASE                    = 0xe000e000, // NVIC
         TIMER4_BASE                 = 0xe000e010, // SysTick
         IC1_BASE                    = 0xe000e0f0, // NVIC
