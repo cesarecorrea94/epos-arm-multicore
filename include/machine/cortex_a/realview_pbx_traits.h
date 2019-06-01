@@ -18,9 +18,9 @@ template<> struct Traits<Machine>: public Traits<Machine_Common>
     static const unsigned int CPUS = Traits<Build>::CPUS;
 
     // Physical Memory
-    static const unsigned int MEM_BASE    = 0x10060000; // Is 'Onboard SRAM' here?
-    static const unsigned int MEM_TOP     = 0x1007FFFF;
-    static const unsigned int BOOT_STACK  = 0x1007FFFC; // MEM_TOP - sizeof(int)
+    static const unsigned int MEM_BASE    = 0x00000000; // DDR SDRAM
+    static const unsigned int MEM_TOP     = 0x0FFFFFFF;
+    static const unsigned int BOOT_STACK  = 0x0FFFFFFC; // MEM_TOP - sizeof(int)
 
     // Logical Memory Map
     static const unsigned int APP_LOW     = MEM_BASE;
