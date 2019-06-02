@@ -30,7 +30,7 @@ template<> struct Traits<Machine>: public Traits<Machine_Common>
 
     static const unsigned int PHY_MEM     = MEM_BASE;
     static const unsigned int IO_BASE     = 0x10000000; // Is 'FPGA Peripherals' here?
-    static const unsigned int IO_TOP      = 0x1001FFFF;
+    static const unsigned int IO_TOP      = 0xBFFFFFFF;
 
     static const unsigned int SYS         = 0x00000000; // What goes here??
     static const unsigned int SYS_CODE    = 0x00000000; // Library mode only => APP + SYS

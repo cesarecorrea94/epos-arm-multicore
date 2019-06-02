@@ -134,7 +134,7 @@ template<> struct Traits<System>: public Traits<void>
     static const unsigned int mode = Traits<Build>::MODE;
     static const bool multicore = (Traits<Build>::CPUS > 1);
     static const bool multithread = (Traits<Application>::MAX_THREADS > 1);
-    static const bool multiheap = true;
+    static const bool multiheap = false;
 
     static const unsigned long LIFE_SPAN = 1 * YEAR; // s
 

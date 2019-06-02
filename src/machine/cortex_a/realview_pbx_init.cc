@@ -7,7 +7,7 @@
 __BEGIN_SYS
 
 void REALVIEW_PBX::pre_init()
-{
+{/*
     // Initialize the clock
     CPU::Reg32 rcc = scr(RCC);
 
@@ -47,7 +47,7 @@ void REALVIEW_PBX::pre_init()
 
     // enable use of PLL by clearing BYPASS
     rcc &= ~RCC_BYPASS;
-    scr(RCC) = rcc;
+    scr(RCC) = rcc;*/
 }
 
 void REALVIEW_PBX::init()
