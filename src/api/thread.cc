@@ -3,6 +3,7 @@
 #include <machine.h>
 #include <system.h>
 #include <process.h>
+#include <time.h>
 
 // This_Thread class attributes
 __BEGIN_UTIL
@@ -294,6 +295,23 @@ void Thread::wakeup_all(Queue * q)
         unlock();
 }
 
+void Thread::reevaluate(){
+	// Verifica se o Alarm::_elapsed mudou desde a última revalidação.
+	// Evita o perigo de looping entre threads de mesma prioridade na iteração.
+	static int last_revalue = 0;
+	if(last_revalue == Alarm::elapsed()) return;
+	last_revalue = Alarm::elapsed();
+	for(auto *e = _scheduler.head();
+			e != _scheduler.tail(); ) {
+		// Itera pela lista de escalonamento, removendo cada thread da lista e repondo com o rank atualizado.
+		// Como a prioridade só aumenta com o tempo (aging), não repetirá a mesma thread na iteração.
+		// I.e. não ocorre de uma thread ser inserida além da posição de iteração atual na fila.
+		auto *next = e->next();
+		_scheduler.remove(e->object());
+		_scheduler.insert(e->object());
+		e = next;
+	}
+}
 
 void Thread::reschedule()
 {
@@ -353,6 +371,7 @@ int Thread::idle()
 
         CPU::int_enable();
         CPU::halt();
+        if(!preemptive) yield(); // otherwise it never releases the CPU
     }
 
     CPU::int_disable();

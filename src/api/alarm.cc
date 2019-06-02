@@ -131,4 +131,20 @@ void Alarm::handler(const IC::Interrupt_Id & i)
     }
 }
 
+// The following Scheduling Criteria depend on Alarm, which is not yet available at scheduler.h
+namespace Scheduling_Criteria {
+    HRRN::HRRN(int p): Priority(p), _create_time(Alarm::_elapsed) {}
+    HRRN::operator const volatile int() const volatile {
+        switch(_priority){
+        //case MAIN: return MAIN; //default return the same (which is more efficient/readable?)
+        case IDLE: return IDLE;
+        default:
+            // max( (w+s)/s ) <=> max( w/s ) <=> min( s/w )
+            int wt = Alarm::_elapsed - _create_time +1; // waiting time (avoid division by zero)
+            int ratio = _priority / wt;
+            return ratio;
+        }
+    }
+};
+
 __END_SYS

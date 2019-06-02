@@ -88,6 +88,7 @@ public:
     static Thread * volatile self() { return running(); }
     static void yield();
     static void exit(int status = 0);
+	static void reevaluate();
 
 protected:
     void constructor_prologue(unsigned int stack_size);

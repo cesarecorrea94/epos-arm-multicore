@@ -35,7 +35,7 @@ namespace Scheduling_Criteria
     public:
         Priority(int p = NORMAL): _priority(p) {}
 
-        operator const volatile int() const volatile { return _priority; }
+        virtual operator const volatile int() const volatile { return _priority; }
 
     protected:
         volatile int _priority;
@@ -75,6 +75,34 @@ namespace Scheduling_Criteria
 
     public:
         FCFS(int p = NORMAL); // Defined at Alarm
+    };
+
+    // Highest Response Ratio Next
+    class HRRN: public Priority 
+    {
+    public:
+        // Service Time
+        enum {
+            MAIN   = 0,
+            HIGH   = (unsigned(1) << ((sizeof(int)-1) * 8 + 2)),
+            NORMAL = (unsigned(1) << ((sizeof(int)-1) * 8 + 3)),
+            LOW    = (unsigned(1) << ((sizeof(int)-1) * 8 + 4)),
+            IDLE   = (unsigned(1) << ( sizeof(int)    * 8 - 1)) - 1 // Max signed int
+        };
+
+        // Policy traits
+        static const bool timed = false;
+        static const bool dynamic = true;
+        static const bool preemptive = false;
+
+    public:
+        HRRN(int p = NORMAL); // Defined at Alarm
+
+        operator const volatile int() const volatile override;
+
+    protected:
+        using Priority::_priority; // service_time
+        int _create_time;
     };
 }
 
