@@ -6,6 +6,7 @@ extern "C" void * __data_start;
 extern "C" void * _edata;
 extern "C" void * __bss_start;
 extern "C" void * _end;
+char ttb_address[16*1024] __attribute__((aligned (16*1024)));
 
 __BEGIN_SYS
 
@@ -16,9 +17,6 @@ void MMU::init()
     db<Init, MMU>(INF) << "MMU::init::dat.b=" << &__data_start << ",dat.e=" << &_edata << ",bss.b=" << &__bss_start << ",bss.e=" << &_end << endl;
 
     ASM(
-    "\n     b inicio"
-    "\n ttb_address: .word 0xFA0000" /* Gambiarra */
-    "\n inicio:"
     // Disable MMU
     "\n     MRC p15, 0, r1, c1, c0, 0"  // Atribui-se ao R1 o valor do registrador 1 do
                                         // coprocessor 15
@@ -70,9 +68,9 @@ void MMU::init()
     // todas com Full Access e Strongly Ordered
     "\n     LDR r0, =0xDE2"             // Atribui-se ao R0 parte do descriptor
 //                  ^^^^^^ Binário no PDF (averiguar)
-//  "\n     LDR r1, =ttb_address"       // Atribui-se ao R1 endereço base
+    "\n     LDR r1, =ttb_address"       // Atribui-se ao R1 endereço base
                                         // da L1 tranlastion table
-    "\n     LDR r1, ttb_address" /* PDF Cortex-A9 */
+//  "\n     LDR r1, ttb_address" /* PDF Cortex-A9 */
     "\n     LDR r3, = 4095"             // R3 se torna o contador para o loop
 
     "\n write_pte:"                     // Label do loop para escrita das
@@ -102,9 +100,9 @@ void MMU::init()
     // Inicializa a MMU
     "\n     MOV r1,#0x0"
     "\n     MCR p15, 0, r1, c2, c0, 2"  // Escrita do Translation Table Base Control Register
-//  "\n     LDR r1, =ttb_address"       // Atribui-se ao R1 endereço base
+    "\n     LDR r1, =ttb_address"       // Atribui-se ao R1 endereço base
                                         // da L1 tranlastion table
-    "\n     LDR r1, ttb_address" /* PDF Cortex-A9 */
+//  "\n     LDR r1, ttb_address" /* PDF Cortex-A9 */
     "\n     MCR p15, 0, r1, c2, c0, 0"  // Escreve-se no reg 1 do coprocessor 15 o que ha
                                         // em r1 (endereco base da tranlastion table)
 
