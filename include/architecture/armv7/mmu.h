@@ -33,7 +33,7 @@ public:
     {
     public:
         Chunk() {}
-        Chunk(unsigned int bytes, Flags flags): _phy_addr(alloc(bytes)), _bytes(bytes), _flags(flags) {}
+        Chunk(unsigned int bytes, Flags flags, const Color & color = WHITE): _phy_addr(alloc(bytes)), _bytes(bytes), _flags(flags) {}
         Chunk(Phy_Addr phy_addr, unsigned int bytes, Flags flags): _phy_addr(phy_addr), _bytes(bytes), _flags(flags) {}
 
         ~Chunk() { free(_phy_addr, _bytes); }
