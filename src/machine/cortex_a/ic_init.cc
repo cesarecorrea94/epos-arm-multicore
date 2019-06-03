@@ -5,7 +5,8 @@
 #include <machine/timer.h>
 #include <machine/usb.h>
 #include <machine/gpio.h>
-#include <machine/nic.h>
+#include <machine/nic.h> // Cortex-M doesn't include it. Is it necessary?
+//                ^^^    Should it be nvic?
 
 __BEGIN_SYS
 
