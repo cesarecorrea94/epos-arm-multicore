@@ -1,4 +1,5 @@
 #include <utility/ostream.h>
+#include <time.h>
 
 using namespace EPOS;
 
@@ -18,6 +19,7 @@ int main()
     cout << b << endl;
     cout << c << endl;
     cout << d << endl;
+    //Delay thinking(2000000);
     cout << "-------Endereços-------" << endl;
     cout << &a << endl;
     cout << &b << endl;
