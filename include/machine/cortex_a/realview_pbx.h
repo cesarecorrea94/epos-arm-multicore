@@ -27,47 +27,35 @@ public:
 
     // Base addresses for memory-mapped I/O devices
     enum {
-        // Watchdogs
-        // WDT0_BASE                   = 0x1000F000, // SP805 Watchdog module OK
-        // WDT1_BASE                   = 0x10010000, // SP805 Watchdog module OK
-
-        // GPIO
-        // GPIOA_BASE                  = 0x10013000, // PrimeCell PL061 GPIO
-        // GPIOB_BASE                  = 0x10014000, // PrimeCell PL061 GPIO
-        // GPIOC_BASE                  = 0x10015000, // PrimeCell PL061 GPIO
-        // GPIOD_BASE                  = 0x40007000, // PrimeCell PL061 GPIO //VERIFICAR!!!
-        // GPIOE_BASE                  = 0x40024000, // PrimeCell PL061 GPIO //VERIFICAR!!!
-        GPIO0_BASE                  = 0x10013000, // PL061 PrimeCell GPIO OK
-        // GPIO1_BASE                  = 0x10014000, // PL061 PrimeCell GPIO OK
-        // GPIO2_BASE                  = 0x10015000, // PL061 PrimeCell GPIO OK
-
-        // UART
-        // SSP                         = 0x1000D000, // PL022 PrimeCell Synchronous Serial Port (SSP)
-        UART0_BASE                  = 0x10009000, // PL011 PrimeCell UART OK
-        UART1_BASE                  = 0x1000A000, // PL011 PrimeCell UART OK
-        UART2_BASE                  = 0x1000B000, // PL011 PrimeCell UART OK
-        UART3_BASE                  = 0x1000C000, // PL011 PrimeCell UART OK
-
-        // I2C
-        // I2C1_BASE                   = 0x40020000, // I2C
-        // I2C2_BASE                   = 0x40021000, // I2C
-        
-        // Timers
-        TIMER0_BASE                 = 0x10011000, // SP804 Dual-Timer module OK
-        TIMER1_BASE                 = 0x10011020, // SP804 Dual-Timer module OK
+        SCR_BASE        = 0x10000000,//-0x10000fff (prio 0, i/o): arm-sysctl
+        I2C_BASE        = 0x10002000,//-0x10002fff (prio 0, i/o): versatile_i2c
+        //                  0x10004000-0x10004fff (prio 0, i/o): pl041                // PrimeCell Advanced Audio CODEC
+        //                  0x10005000-0x10005fff (prio 0, i/o): pl181                // PrimeCell MultiMedia Card Interface (MMCI)
+        //                  0x10006000-0x10006fff (prio 0, i/o): pl050                // PrimeCell PS2 Keyboard/Mouse Interface
+        //                  0x10007000-0x10007fff (prio 0, i/o): pl050                // PrimeCell PS2 Keyboard/Mouse Interface
+        UART0_BASE      = 0x10009000,//-0x10009fff (prio 0, i/o): pl011                // PrimeCell UART0
+        UART1_BASE      = 0x1000a000,//-0x1000afff (prio 0, i/o): pl011                // PrimeCell UART1
+        UART2_BASE      = 0x1000b000,//-0x1000bfff (prio 0, i/o): pl011                // PrimeCell UART2
+        UART3_BASE      = 0x1000c000,//-0x1000cfff (prio 0, i/o): pl011                // PrimeCell UART3
+        TIMER0_BASE     = 0x10011000,//-0x10011fff (prio 0, i/o): sp804                // ARM Dual-Timer Module
+        TIMER1_BASE     = 0x10012000,//-0x10012fff (prio 0, i/o): sp804                // ARM Dual-Timer Module
+        GPIOA_BASE      = 0x10013000,//-0x10013fff (prio 0, i/o): pl061                // PrimeCell General Purpose Input/Output (GPIO)
+        GPIOB_BASE      = 0x10014000,//-0x10014fff (prio 0, i/o): pl061                // PrimeCell General Purpose Input/Output (GPIO)
+        GPIOC_BASE      = 0x10015000,//-0x10015fff (prio 0, i/o): pl061                // PrimeCell General Purpose Input/Output (GPIO)
+        //                  0x10017000-0x10017fff (prio 0, i/o): pl031                // PrimeCell Real Time Clock (TRC)
+        //                  0x10020000-0x10020fff (prio 0, i/o): pl110                // PrimeCell Color LCD Controller (Display)
+        //                  0x10030000-0x10030fff (prio 0, i/o): pl080                // PrimeCell DMA Controller
+        SCU_BASE        = 0x1f000000,//-0x1f0000ff (prio 0, i/o): a9-scu
+        GIC_BASE        = 0x1f000100,//-0x1f0001ff (prio 0, i/o): gic_cpu
+        TIMER4_BASE     = 0x1f000200,//-0x1f00021f (prio 0, i/o): a9gtimer shared
+        //                  0x1f000600-0x1f00061f (prio 0, i/o): arm_mptimer_timer
+        //                  0x1f000620-0x1f00063f (prio 0, i/o): arm_mptimer_timer
+        //                  0x1f001000-0x1f001fff (prio 0, i/o): gic_dist
+        //                  0x1f002000-0x1f002fff (prio 0, i/o): l2x0_cc
+        //                  0x4e000000-0x4e0000ff (prio 0, i/o): lan9118-mmio
         TIMER2_BASE                 = 0x10012000, // SP804 Dual-Timer module OK
-        TIMER3_BASE                 = 0x10020020, // SP804 Dual-Timer module OK        
-        // TIMER45_BASE                = 0x10018000, // SP804 Dual-Timer module OK
-        // TIMER67_BASE                = 0x10019000, // SP804 Dual-Timer module OK
-        // TIMER4_BASE                 = 0xe000e010, // SysTick
-
-        SCR_BASE                    = 0x10000000, // System Control: pg 104 realview
+        TIMER3_BASE                 = 0x10020020, // SP804 Dual-Timer module OK
         IC0_BASE                    = 0xe000e000, // NVIC
-        // IC1_BASE                    = 0xe000e0f0, // NVIC
-        // ADC0_BASE                   = 0x40038000, // ADC
-        // FLASH0_BASE                 = 0x400fd000, // Flash Controller
-        
-
     };
 
     // System Control Registers offsets to SCR_BASE
@@ -496,12 +484,12 @@ public:
     static volatile Reg32 & tsc(unsigned int o)     { return reinterpret_cast<volatile Reg32 *>(TIMER1_BASE)[o / sizeof(Reg32)]; }
     // static volatile Reg32 & timer0(unsigned int o)  { return reinterpret_cast<volatile Reg32 *>(TIMER0_BASE)[o / sizeof(Reg32)]; }
     // static volatile Reg32 & timer1(unsigned int o)  { return reinterpret_cast<volatile Reg32 *>(TIMER2_BASE)[o / sizeof(Reg32)]; }
-    static volatile Reg32 & gpioa(unsigned int o)   { return reinterpret_cast<volatile Reg32 *>(GPIO0_BASE)[o / sizeof(Reg32)]; }
+    static volatile Reg32 & gpioa(unsigned int o)   { return reinterpret_cast<volatile Reg32 *>(GPIOA_BASE)[o / sizeof(Reg32)]; }
     // static volatile Reg32 & gpiob(unsigned int o)   { return reinterpret_cast<volatile Reg32 *>(GPIOB_BASE)[o / sizeof(Reg32)]; }
     // static volatile Reg32 & gpioc(unsigned int o)   { return reinterpret_cast<volatile Reg32 *>(GPIOC_BASE)[o / sizeof(Reg32)]; }
     // static volatile Reg32 & gpiod(unsigned int o)   { return reinterpret_cast<volatile Reg32 *>(GPIOD_BASE)[o / sizeof(Reg32)]; }
     // static volatile Reg32 & gpioe(unsigned int o)   { return reinterpret_cast<volatile Reg32 *>(GPIOE_BASE)[o / sizeof(Reg32)]; }
-    static volatile Reg32 & gpio(unsigned int port, unsigned int o) { return reinterpret_cast<volatile Reg32 *>(GPIO0_BASE + 0x1000*(port))[o / sizeof(Reg32)]; }
+    static volatile Reg32 & gpio(unsigned int port, unsigned int o) { return reinterpret_cast<volatile Reg32 *>(GPIOA_BASE + 0x1000*(port))[o / sizeof(Reg32)]; }
 
 protected:
     static void pre_init();
