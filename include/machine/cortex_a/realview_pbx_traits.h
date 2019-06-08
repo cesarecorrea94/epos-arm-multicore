@@ -32,9 +32,9 @@ template<> struct Traits<Machine>: public Traits<Machine_Common>
     static const unsigned int IO_BASE     = 0x10000000;
     static const unsigned int IO_TOP      = 0xBFFFFFFF;
 
-    static const unsigned int SYS         = 0x00000000; // What goes here??
-    static const unsigned int SYS_CODE    = 0x00000000; // Library mode only => APP + SYS
-    static const unsigned int SYS_DATA    = 0x0F000000; // Library mode only => APP + SYS
+    static const unsigned int SYS         = 0x0; // It's not used on the Project
+    static const unsigned int SYS_CODE    = 0x0; // Library mode only => APP + SYS
+    static const unsigned int SYS_DATA    = 0x0; // Library mode only => APP + SYS
 
     // Default Sizes and Quantities
     static const unsigned int STACK_SIZE  = 512;
