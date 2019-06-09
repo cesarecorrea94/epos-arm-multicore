@@ -19,8 +19,8 @@ template<> struct Traits<Machine>: public Traits<Machine_Common>
 
     // Physical Memory  
     static const unsigned int MEM_BASE    = 0x00000000; // DDR SDRAM
-    static const unsigned int MEM_TOP     = 0x0FFFFFFF;
-    static const unsigned int BOOT_STACK  = 0x0FFFFFFC; // MEM_TOP - sizeof(int)
+    static const unsigned int MEM_TOP     = 0x07FFFFFF;
+    static const unsigned int BOOT_STACK  = 0x07FFFFFC; // MEM_TOP - sizeof(int)
 
     // Logical Memory Map
     static const unsigned int APP_LOW     = MEM_BASE;
